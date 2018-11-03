@@ -1,0 +1,15 @@
+/* 添加 CSS */
+.card-title {
+  text-align: center;
+  padding-top: 1em;
+}
+.animal-card {
+  width: 320px;
+  background-color: cyan;
+  height: 30%;
+}
+.card-image {
+  width: 300px;
+  height: 200px;
+  padding: 10px;
+}
