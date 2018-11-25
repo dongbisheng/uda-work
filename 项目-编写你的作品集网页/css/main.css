@@ -1,0 +1,128 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
+.main_container{
+	max-width: 960px;
+	width: calc(100% - 10px);
+	margin-right: auto;
+	margin-left: auto;
+}
+.header {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 4px solid #7d97ad;
+}
+.header img {
+	width: 150px;
+	height: 150px;
+}
+.nav_titles {
+	height: 150px;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-end;
+	justify-content: flex-start;
+}
+.nav_titles p:first-child{
+	font-size: 60px;
+    color: #3f464a;
+	margin: 0;
+}
+.nav_titles p:nth-child(2){
+	margin-top: 10px;
+}
+
+.main_img_container{
+	margin-top: 2em;
+}
+.main_img_container>img{
+	width: 100%;
+	min-width: 400px;
+}
+
+ul {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+    margin-bottom: 2em;
+}
+.all_work_title{
+	margin: 45px 0 15px 0;
+	padding-left: 0.5em;
+    color: #8795A2;
+    font-size: 2em;
+}
+.work_item img{
+	width: 100%;
+	height: 200px;
+}
+.work_item p:first-of-type{
+    margin: 1em 0;
+    color: #333a33;
+    font-size: 30px;
+}
+.work_item p:last-of-type{
+    margin: 0 0 1em 0;
+}
+.work_item{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: calc((100% - 20px) / 3);
+	margin-right: 10px;
+}
+.work_item:last-child{
+	margin-right: 0;
+}
+.work_item a{
+    text-decoration: none;
+    color: #3f4347;
+}
+.work_item a:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
+@media screen and (max-width: 900px) {
+	.work_item{
+		width: calc((100% - 10px) / 2);
+		margin-left: 10px;
+		margin-right: 0;
+	}
+	.work_item:first-child{
+		margin-left: 0;
+	}
+}
+@media screen and (max-width: 690px){
+	.work_item {
+		width: 100%;
+        margin-right: 10px;
+        margin-left: 10px;
+	}
+    .work_item img {
+        height: 300px;
+    }
+}
+@media screen and (max-width: 620px){
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .nav_titles{
+        order: -1;
+        align-items: flex-start;
+    }
+}
+
+
