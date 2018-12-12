@@ -42,7 +42,7 @@ body {
 
 .win_page button {
     width: 120px;
-    height: 45px;
+    min-height: 48px;
     color: #fff;
     font-size: 20px;
     font-weight: bold;
@@ -52,6 +52,7 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    text-align: center;
 }
 
 
@@ -135,4 +136,38 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+.score-panel .times {
+    margin-left: 2em;
+}
+
+@media screen and (max-width:600px){
+    .deck {
+        width: 100vw;
+        min-height: auto;
+        background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+        padding: 32px;
+        border-radius: 10px;
+        box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 3em;
+    }
+
+    .deck .card {
+        height: calc((100vw - 10vw * 3)/4);
+        width: calc((100vw - 10vw * 3)/4);
+        background: #2e3d49;
+        margin-bottom: 10vw;
+        font-size: 0;
+        color: #ffffff;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    }
 }

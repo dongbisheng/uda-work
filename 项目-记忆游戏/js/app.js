@@ -12,7 +12,11 @@ let solvedCard = 0;
 let moves = 0;
 //星级评分 最高评分点击16次完成为三星，之后每多点击10次减一星，最低一星
 let stars = 3;
-
+//总耗时
+let cost_second = 0;
+let stop_time_flag = false;
+//设置一个bool值，快速点击三次卡片时的响应
+let fobiden = false;
 /*
  * 显示页面上的卡片
  *   - 使用下面提供的 "shuffle" 方法对数组中的卡片进行洗牌
@@ -43,6 +47,7 @@ function timeCount(){
             </ul>
 
             <span class='moves'>${moves}</span> Moves
+            <span class="times">Time: ${cost_second} second</span>
 
                 <div class='restart'>
                 <i class='fa fa-repeat'></i>
@@ -50,16 +55,27 @@ function timeCount(){
         panel.innerHTML = panel_html;
         const restart_btn = document.querySelector('.restart');
         restart_btn.addEventListener('click',function () {
+            stopCountTime();
             pre_target = null;
             solvedCard = 0;
             moves = 0;
             stars = 3;
+            cost_second = 0;
+            fobiden = false;
             genericNewCards();
             timeCount();
+
         });
         hiddenCards();
+        stop_time_flag = false;
+        startCountTime();
     }
 
+}
+
+function refreshTimes(){
+    const time_ele = document.getElementsByClassName('times')[0];
+    time_ele.innerHTML = 'Time:  ' + cost_second + ' second';
 }
 
 function refreshStorePannel(){
@@ -97,6 +113,7 @@ function genericNewCards(){
     const deck_table = document.querySelector('.deck');
     deck_table.appendChild(frag);
     deck_table.addEventListener('click',function (evn) {
+        if(fobiden) return;
         if(evn.target.nodeName !== 'LI') return;
         if(evn.target.classList.contains('show','open','error','match')) return;
         moves += 1;
@@ -118,14 +135,17 @@ function genericNewCards(){
                if(solvedCard == 16){
                    showWinPage();
                    solvedCard = 0;
+                   stopCountTime();
                }
            }else{
+               fobiden = true;
                pre_target.classList.add('error');
                now_target.classList.add('error');
                setTimeout(function () {
                    hiddenCard(pre_target);
                    hiddenCard(now_target);
                    pre_target = null;
+                   fobiden = false;
                },500);
            }
        }
@@ -159,6 +179,8 @@ function clearCards(){
 function showWinPage() {
     const win_store_para = document.getElementsByClassName('win_store_data')[0];
     win_store_para.textContent = `With ${moves} moves and ${stars} stars!`;
+    const win_time_para = document.getElementsByClassName('win_time_data')[0];
+    win_time_para.textContent =  `Total cost ${cost_second} seconds!`;
     const winPage = document.getElementsByClassName('win_page')[0];
     winPage.classList.remove('hidden_content');
     winPage.classList.add('show_content');
@@ -178,8 +200,23 @@ function playAagain() {
     solvedCard = 0;
     moves = 0;
     stars = 3;
+    cost_second = 0;
+    stop_time_flag = false;
     genericNewCards();
     timeCount();
+}
+
+//开始记时
+function startCountTime(){
+    if(!stop_time_flag){
+        cost_second++;
+        refreshTimes();
+        setTimeout(startCountTime,1000);
+    }
+}
+//结束计时
+function stopCountTime(){
+    stop_time_flag = true;
 }
 
 // 洗牌函数来自于 http://stackoverflow.com/a/2450976
