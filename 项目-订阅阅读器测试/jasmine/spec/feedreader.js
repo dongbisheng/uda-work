@@ -26,7 +26,13 @@ $(function() {
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
         it('url of feed in allFeeds valid', function () {
-            expect(allFeeds).toBeValidFeedListOfKey('url');
+            let valid = true;
+            for(let feed of allFeeds){
+                var regularExpressionUrl = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/;
+                valid = regularExpressionUrl.test(feed.url);
+                if(!valid){ break; }
+            }
+            expect(valid).toBe(true);
         });
 
         /* TODO:
@@ -57,9 +63,9 @@ $(function() {
           it('The menu switch is ok', function(){
               let menuIcon = $('.menu-icon-link');
               menuIcon.click();
-              expect($('body').attr('class')).not.toBe('menu-hidden');
+              expect($('body').hasClass('menu-hidden')).not.toBe(true);
               menuIcon.click();
-              expect($('body').attr('class')).toEqual('menu-hidden');
+              expect($('body').hasClass('menu-hidden')).toBe(true);
           });
       })
 
@@ -74,9 +80,7 @@ $(function() {
          */
      describe('Initial Entries', function () {
            beforeEach(function (done) {
-               loadFeed(0,function () {
-                   done();
-               });
+               loadFeed(0,done);
            });
            it('Initial Entries success', function (done) {
                expect($('.feed').find('.entry').length).toBeGreaterThan(0);
@@ -111,9 +115,8 @@ $(function() {
         afterEach(function () {
            jasmine.DEFAULT_TIMEOUT_INTERVAL = originTimeOut;
         });
-       it('Feed content shoud be changed', function (done) {
+       it('Feed content shoud be changed', function () {
            expect(firstContent).not.toEqual(secondContent);
-           done();
        });
     });
 }());
