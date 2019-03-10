@@ -4,10 +4,20 @@ let restaurants,
 var newMap
 var markers = []
 
+
+
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.register('./sw.js').then(function(eve){
+      console.log('okokok')
+    }).catch(function(error){
+      console.log(error)
+    })
+  }
   initMap(); // added 
   fetchNeighborhoods();
   fetchCuisines();
@@ -72,6 +82,10 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize leaflet map, called from HTML.
  */
 initMap = () => {
+  var container = L.DomUtil.get('map');
+  if(container != null){
+    container._leaflet_id = null;
+  }
   self.newMap = L.map('map', {
         center: [40.722216, -73.987501],
         zoom: 12,
