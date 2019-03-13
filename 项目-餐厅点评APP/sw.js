@@ -1,4 +1,18 @@
 self.addEventListener('fetch',function(event){
-    console.log(event.request)
-    console.log("liumangliumang")
+    event.respondWith(
+        caches.match(event.request).then(function(res){
+            return res || fetch(event.request)
+        })
+    )
+})
+self.addEventListener('install',function(event){
+    event.waitUntil(
+        caches.open('restaurant_cache').then(function(cache){
+            return cache.addAll([
+                '/',
+                'js/',
+                'css/'
+            ]);
+        })
+    )
 })
